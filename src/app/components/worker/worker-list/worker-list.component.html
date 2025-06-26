@@ -1,0 +1,102 @@
+<div class="container mx-auto p-6">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold text-gray-800">Listado de Trabajadores</h1>
+    <button
+      routerLink="/workers/new"
+      class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg flex items-center shadow-md transition duration-300 ease-in-out transform hover:scale-105"
+    >
+      <i class="fas fa-plus-circle mr-2"></i> Nuevo Trabajador
+    </button>
+  </div>
+
+  <!-- Botón mostrar/ocultar -->
+  <button
+    (click)="toggleInactivos()"
+    class="mb-6 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105"
+  >
+    <i class="fas fa-user-slash mr-2"></i>
+    {{ mostrarInactivos ? 'Ocultar Inactivos' : 'Mostrar Inactivos' }}
+  </button>
+
+  <!-- Activos -->
+  <div class="bg-white shadow-xl rounded-lg overflow-hidden">
+    <div class="p-4 bg-gray-100 border-b border-gray-200">
+      <h2 class="text-xl font-semibold text-gray-700">Trabajadores Activos</h2>
+    </div>
+    <div *ngIf="activeWorkers.length === 0" class="p-6 text-center text-gray-600">
+      No hay trabajadores activos.
+    </div>
+    <div *ngIf="activeWorkers.length > 0" class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nombre Completo</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">DNI</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Cargo</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Estado</th>
+            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Acciones</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <tr *ngFor="let worker of activeWorkers">
+            <td class="px-6 py-4 whitespace-nowrap">{{ worker.firstName }} {{ worker.lastName }}</td>
+            <td class="px-6 py-4 whitespace-nowrap">{{ worker.dni }}</td>
+            <td class="px-6 py-4 whitespace-nowrap">{{ worker.position }}</td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <span class="px-2 inline-flex text-xs font-semibold rounded-full"
+                    [ngClass]="worker.active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'">
+                {{ worker.active ? 'Activo' : 'Inactivo' }}
+              </span>
+            </td>
+            <td class="px-6 py-4 text-center">
+              <button (click)="viewWorkerDetails(worker.id!)" class="text-blue-600 hover:text-blue-900 mx-2"><i class="fas fa-eye"></i></button>
+              <button (click)="editWorker(worker.id!)" class="text-yellow-600 hover:text-yellow-900 mx-2"><i class="fas fa-edit"></i></button>
+              <button (click)="softDeleteWorker(worker.id!)" class="text-red-600 hover:text-red-900 mx-2"><i class="fas fa-trash-alt"></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Inactivos -->
+  <div *ngIf="mostrarInactivos" class="bg-white shadow-xl rounded-lg overflow-hidden mt-8">
+    <div class="p-4 bg-gray-100 border-b border-gray-200">
+      <h2 class="text-xl font-semibold text-gray-700">Trabajadores Inactivos</h2>
+    </div>
+    <div *ngIf="inactiveWorkers.length === 0" class="p-6 text-center text-gray-600">
+      No hay trabajadores inactivos.
+    </div>
+    <div *ngIf="inactiveWorkers.length > 0" class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nombre Completo</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">DNI</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Cargo</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Estado</th>
+            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Acciones</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <tr *ngFor="let worker of inactiveWorkers">
+            <td class="px-6 py-4 whitespace-nowrap">{{ worker.firstName }} {{ worker.lastName }}</td>
+            <td class="px-6 py-4 whitespace-nowrap">{{ worker.dni }}</td>
+            <td class="px-6 py-4 whitespace-nowrap">{{ worker.position }}</td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <span class="px-2 inline-flex text-xs font-semibold rounded-full"
+                    [ngClass]="worker.active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'">
+                {{ worker.active ? 'Activo' : 'Inactivo' }}
+              </span>
+            </td>
+            <td class="px-6 py-4 text-center">
+              <button (click)="restoreWorker(worker.id!)" class="text-green-600 hover:text-green-900 mx-2">
+                <i class="fas fa-undo"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

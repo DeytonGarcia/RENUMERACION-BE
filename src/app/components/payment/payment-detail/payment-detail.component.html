@@ -1,0 +1,64 @@
+<div class="container mx-auto p-6">
+  <div *ngIf="payment" class="bg-white shadow-xl rounded-lg p-8">
+    <h1 class="text-3xl font-bold text-gray-800 mb-6">Detalles del Pago</h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+      <div>
+        <p class="text-gray-600 text-sm">Obrero:</p>
+        <p class="text-gray-900 text-lg font-medium">{{ workerFullName }}</p>
+      </div>
+      <div>
+        <p class="text-gray-600 text-sm">Fecha de Pago:</p>
+        <p class="text-gray-900 text-lg font-medium">{{ payment.paymentDate | date:'dd/MM/yyyy' }}</p>
+      </div>
+      <div>
+        <p class="text-gray-600 text-sm">Monto:</p>
+        <p class="text-gray-900 text-lg font-medium">S/ {{ payment.amount | number:'1.2-2' }}</p>
+      </div>
+      <div>
+        <p class="text-gray-600 text-sm">Tipo de Pago:</p>
+        <p class="text-gray-900 text-lg font-medium">{{ payment.paymentType }}</p>
+      </div>
+      <div>
+        <p class="text-gray-600 text-sm">Descripción:</p>
+        <p class="text-gray-900 text-lg font-medium">{{ payment.description }}</p>
+      </div>
+      <div>
+        <p class="text-gray-600 text-sm">Inicio del Período:</p>
+        <p class="text-gray-900 text-lg font-medium">{{ payment.periodStart | date:'dd/MM/yyyy' }}</p>
+      </div>
+      <div>
+        <p class="text-gray-600 text-sm">Fin del Período:</p>
+        <p class="text-gray-900 text-lg font-medium">{{ payment.periodEnd | date:'dd/MM/yyyy' }}</p>
+      </div>
+      <div>
+        <p class="text-gray-600 text-sm">Estado del Pago:</p>
+        <p class="text-gray-900 text-lg font-medium">
+          <span [ngClass]="{'bg-green-100 text-green-800': payment.active, 'bg-red-100 text-red-800': !payment.active}"
+                class="px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full">
+            {{ payment.active ? 'Activo' : 'Inactivo' }}
+          </span>
+        </p>
+      </div>
+      <div>
+        <p class="text-gray-600 text-sm">Status (interno):</p>
+        <p class="text-gray-900 text-lg font-medium">{{ payment.status }}</p>
+      </div>
+    </div>
+
+    <div class="mt-8 flex justify-end">
+      <button (click)="goBack()"
+              class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg flex items-center shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+        <i class="fas fa-arrow-left mr-2"></i> Volver
+      </button>
+      <button (click)="editPayment(payment.id!)"
+              class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg flex items-center shadow-md transition duration-300 ease-in-out transform hover:scale-105 ml-4">
+        <i class="fas fa-edit mr-2"></i> Editar
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="!payment" class="text-center text-gray-600 p-8">
+    <p>Cargando detalles del pago o no se encontró.</p>
+  </div>
+</div>

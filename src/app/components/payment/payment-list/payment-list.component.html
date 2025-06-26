@@ -1,0 +1,110 @@
+<div class="container mx-auto p-6">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold text-gray-800">Listado de Pagos</h1>
+    <button
+      routerLink="/payments/new"
+      class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg flex items-center shadow-md transition duration-300 ease-in-out transform hover:scale-105"
+    >
+      <i class="fas fa-plus-circle mr-2"></i> Nuevo Pago
+    </button>
+  </div>
+
+  <!-- Botón Mostrar/Ocultar Inactivos -->
+  <button
+    (click)="toggleInactivos()"
+    class="mb-6 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105"
+  >
+    <i class="fas fa-user-slash mr-2"></i>
+    {{ mostrarInactivos ? 'Ocultar Inactivos' : 'Mostrar Inactivos' }}
+  </button>
+
+  <!-- Pagos Activos -->
+  <div *ngIf="!mostrarInactivos" class="bg-white shadow-xl rounded-lg overflow-hidden mb-8">
+    <div class="p-4 bg-gray-100 border-b border-gray-200">
+      <h2 class="text-xl font-semibold text-gray-700">Pagos Activos</h2>
+    </div>
+    <div *ngIf="activePayments.length === 0" class="p-6 text-center text-gray-600">
+      No hay pagos activos.
+    </div>
+    <div *ngIf="activePayments.length > 0" class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Obrero</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Fecha Pago</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Monto</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tipo</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Estado</th>
+            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Acciones</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <tr *ngFor="let payment of activePayments">
+            <td class="px-6 py-4">{{ getWorkerFullName(payment.workerId) }}</td>
+            <td class="px-6 py-4">{{ payment.paymentDate | date:'dd/MM/yyyy' }}</td>
+            <td class="px-6 py-4">S/ {{ payment.amount | number:'1.2-2' }}</td>
+            <td class="px-6 py-4">{{ payment.paymentType }}</td>
+            <td class="px-6 py-4">
+              <span class="px-2 inline-flex text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                Activo
+              </span>
+            </td>
+            <td class="px-6 py-4 text-center">
+              <button (click)="viewPaymentDetails(payment.id!)" class="text-blue-600 hover:text-blue-900 mx-2">
+                <i class="fas fa-eye"></i>
+              </button>
+              <button (click)="editPayment(payment.id!)" class="text-yellow-600 hover:text-yellow-900 mx-2">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button (click)="softDeletePayment(payment.id!)" class="text-red-600 hover:text-red-900 mx-2">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Pagos Inactivos -->
+  <div *ngIf="mostrarInactivos" class="bg-white shadow-xl rounded-lg overflow-hidden mt-8">
+    <div class="p-4 bg-gray-100 border-b border-gray-200">
+      <h2 class="text-xl font-semibold text-gray-700">Pagos Inactivos</h2>
+    </div>
+    <div *ngIf="inactivePayments.length === 0" class="p-6 text-center text-gray-600">
+      No hay pagos inactivos.
+    </div>
+    <div *ngIf="inactivePayments.length > 0" class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Obrero</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Fecha Pago</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Monto</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tipo</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Estado</th>
+            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Acciones</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <tr *ngFor="let payment of inactivePayments">
+            <td class="px-6 py-4">{{ getWorkerFullName(payment.workerId) }}</td>
+            <td class="px-6 py-4">{{ payment.paymentDate | date:'dd/MM/yyyy' }}</td>
+            <td class="px-6 py-4">S/ {{ payment.amount | number:'1.2-2' }}</td>
+            <td class="px-6 py-4">{{ payment.paymentType }}</td>
+            <td class="px-6 py-4">
+              <span class="px-2 inline-flex text-xs font-semibold rounded-full bg-red-100 text-red-800">
+                Inactivo
+              </span>
+            </td>
+            <td class="px-6 py-4 text-center">
+              <button (click)="restorePayment(payment.id!)" class="text-green-600 hover:text-green-900 mx-2">
+                <i class="fas fa-undo"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,72 @@
+<div class="container mx-auto p-6">
+  <div *ngIf="worker" class="bg-white shadow-xl rounded-lg p-8">
+    <h1 class="text-3xl font-bold text-gray-800 mb-6">Detalles del Trabajador</h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+      <div>
+        <p class="text-gray-600 text-sm">Nombre Completo:</p>
+        <p class="text-gray-900 text-lg font-medium">{{ worker.firstName }} {{ worker.lastName }}</p>
+      </div>
+      <div>
+        <p class="text-gray-600 text-sm">DNI:</p>
+        <p class="text-gray-900 text-lg font-medium">{{ worker.dni }}</p>
+      </div>
+      <div>
+        <p class="text-gray-600 text-sm">Dirección:</p>
+        <p class="text-gray-900 text-lg font-medium">{{ worker.address }}</p>
+      </div>
+      <div>
+        <p class="text-gray-600 text-sm">Teléfono:</p>
+        <p class="text-gray-900 text-lg font-medium">{{ worker.phone }}</p>
+      </div>
+      <div>
+        <p class="text-gray-600 text-sm">Email:</p>
+        <p class="text-gray-900 text-lg font-medium">{{ worker.email }}</p>
+      </div>
+      <div>
+        <p class="text-gray-600 text-sm">Fecha de Contratación:</p>
+        <p class="text-gray-900 text-lg font-medium">{{ worker.hireDate | date:'dd/MM/yyyy' }}</p>
+      </div>
+      <div>
+        <p class="text-gray-600 text-sm">Fecha de Nacimiento:</p>
+        <p class="text-gray-900 text-lg font-medium">{{ worker.birthDate | date:'dd/MM/yyyy' }}</p>
+      </div>
+      <div>
+        <p class="text-gray-600 text-sm">Cargo:</p>
+        <p class="text-gray-900 text-lg font-medium">{{ worker.position }}</p>
+      </div>
+      <div>
+        <p class="text-gray-600 text-sm">Estado:</p>
+        <p class="text-gray-900 text-lg font-medium">
+          <span [ngClass]="{'bg-green-100 text-green-800': worker.active, 'bg-red-100 text-red-800': !worker.active}"
+                class="px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full">
+            {{ worker.active ? 'Activo' : 'Inactivo' }}
+          </span>
+        </p>
+      </div>
+      <div>
+        <p class="text-gray-600 text-sm">Creado el:</p>
+        <p class="text-gray-900 text-lg font-medium">{{ worker.createdAt | date:'dd/MM/yyyy HH:mm' }}</p>
+      </div>
+      <div>
+        <p class="text-gray-600 text-sm">Actualizado el:</p>
+        <p class="text-gray-900 text-lg font-medium">{{ worker.updatedAt | date:'dd/MM/yyyy HH:mm' }}</p>
+      </div>
+    </div>
+
+    <div class="mt-8 flex justify-end">
+      <button (click)="goBack()"
+              class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg flex items-center shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+        <i class="fas fa-arrow-left mr-2"></i> Volver
+      </button>
+      <button (click)="editWorker(worker.id!)"
+              class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg flex items-center shadow-md transition duration-300 ease-in-out transform hover:scale-105 ml-4">
+        <i class="fas fa-edit mr-2"></i> Editar
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="!worker" class="text-center text-gray-600 p-8">
+    <p>Cargando detalles del trabajador o no se encontró.</p>
+  </div>
+</div>

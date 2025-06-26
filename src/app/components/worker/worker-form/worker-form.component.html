@@ -1,0 +1,71 @@
+<div class="container mx-auto p-6">
+  <div class="bg-white shadow-xl rounded-lg p-8">
+    <h1 class="text-3xl font-bold text-gray-800 mb-6">{{ isEditMode ? 'Editar Trabajador' : 'Crear Nuevo Trabajador' }}</h1>
+
+    <form (ngSubmit)="onSubmit()" #workerForm="ngForm">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div>
+          <label for="firstName" class="block text-sm font-medium text-gray-700 mb-1">Nombre:</label>
+          <input type="text" id="firstName" name="firstName" [(ngModel)]="worker.firstName" required
+                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+        </div>
+        <div>
+          <label for="lastName" class="block text-sm font-medium text-gray-700 mb-1">Apellido:</label>
+          <input type="text" id="lastName" name="lastName" [(ngModel)]="worker.lastName" required
+                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+        </div>
+        <div>
+          <label for="dni" class="block text-sm font-medium text-gray-700 mb-1">DNI:</label>
+          <input type="text" id="dni" name="dni" [(ngModel)]="worker.dni" required
+                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+        </div>
+        <div>
+          <label for="address" class="block text-sm font-medium text-gray-700 mb-1">Dirección:</label>
+          <input type="text" id="address" name="address" [(ngModel)]="worker.address" required
+                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+        </div>
+        <div>
+          <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Teléfono:</label>
+          <input type="text" id="phone" name="phone" [(ngModel)]="worker.phone" required
+                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+        </div>
+        <div>
+          <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email:</label>
+          <input type="email" id="email" name="email" [(ngModel)]="worker.email" required
+                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+        </div>
+        <div>
+          <label for="hireDate" class="block text-sm font-medium text-gray-700 mb-1">Fecha de Contratación:</label>
+          <input type="date" id="hireDate" name="hireDate" [(ngModel)]="worker.hireDate" required
+                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+        </div>
+        <div>
+          <label for="birthDate" class="block text-sm font-medium text-gray-700 mb-1">Fecha de Nacimiento:</label>
+          <input type="date" id="birthDate" name="birthDate" [(ngModel)]="worker.birthDate" required
+                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+        </div>
+        <div>
+          <label for="position" class="block text-sm font-medium text-gray-700 mb-1">Cargo:</label>
+          <input type="text" id="position" name="position" [(ngModel)]="worker.position" required
+                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+        </div>
+        <div>
+          <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status:</label>
+          <input type="text" id="status" name="status" [(ngModel)]="worker.status" required
+                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+        </div>
+      </div>
+
+      <div class="mt-8 flex justify-end">
+        <button type="button" (click)="goBack()"
+                class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg flex items-center shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+          <i class="fas fa-times-circle mr-2"></i> Cancelar
+        </button>
+        <button type="submit" [disabled]="!workerForm.valid"
+                class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg flex items-center shadow-md transition duration-300 ease-in-out transform hover:scale-105 ml-4">
+          <i class="fas fa-save mr-2"></i> {{ isEditMode ? 'Guardar Cambios' : 'Crear Trabajador' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

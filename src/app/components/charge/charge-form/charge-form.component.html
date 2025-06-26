@@ -1,0 +1,65 @@
+<div class="container mx-auto p-6">
+  <div class="bg-white shadow-xl rounded-lg p-8">
+    <h1 class="text-3xl font-bold text-gray-800 mb-6">{{ isEditMode ? 'Editar Cargo' : 'Crear Nuevo Cargo' }}</h1>
+
+    <form (ngSubmit)="onSubmit()" #chargeForm="ngForm">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div>
+          <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nombre:</label>
+          <input type="text" id="name" name="name" [(ngModel)]="charge.name" required
+                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+        </div>
+        <div>
+          <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Descripción:</label>
+          <textarea id="description" name="description" [(ngModel)]="charge.description" rows="3"
+                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"></textarea>
+        </div>
+        <div>
+          <label for="baseSalaryMin" class="block text-sm font-medium text-gray-700 mb-1">Salario Base Mínimo (S/):</label>
+          <input type="number" id="baseSalaryMin" name="baseSalaryMin" [(ngModel)]="charge.baseSalaryMin" required min="0" step="0.01"
+                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+        </div>
+        <div>
+          <label for="baseSalaryMax" class="block text-sm font-medium text-gray-700 mb-1">Salario Base Máximo (S/):</label>
+          <input type="number" id="baseSalaryMax" name="baseSalaryMax" [(ngModel)]="charge.baseSalaryMax" required min="0" step="0.01"
+                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+        </div>
+      </div>
+
+      <div class="mb-6">
+        <label for="responsibilities" class="block text-sm font-medium text-gray-700 mb-1">Responsabilidades (separadas por coma):</label>
+        <input type="text" id="responsibilities" name="responsibilities" [(ngModel)]="responsibilitiesInput"
+               (change)="updateResponsibilities()"
+               class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+        <p class="text-xs text-gray-500 mt-1">Ej: 'Atender clientes, Gestionar inventario'</p>
+      </div>
+
+      <div class="mb-6">
+        <label for="requiredSkills" class="block text-sm font-medium text-gray-700 mb-1">Habilidades Requeridas (separadas por coma):</label>
+        <input type="text" id="requiredSkills" name="requiredSkills" [(ngModel)]="requiredSkillsInput"
+               (change)="updateRequiredSkills()"
+               class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+        <p class="text-xs text-gray-500 mt-1">Ej: 'Comunicación, Liderazgo'</p>
+      </div>
+
+      <div class="mb-6">
+        <label for="benefits" class="block text-sm font-medium text-gray-700 mb-1">Beneficios (separados por coma):</label>
+        <input type="text" id="benefits" name="benefits" [(ngModel)]="benefitsInput"
+               (change)="updateBenefits()"
+               class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+        <p class="text-xs text-gray-500 mt-1">Ej: 'Seguro médico, Vacaciones pagadas'</p>
+      </div>
+
+      <div class="mt-8 flex justify-end">
+        <button type="button" (click)="goBack()"
+                class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg flex items-center shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+          <i class="fas fa-times-circle mr-2"></i> Cancelar
+        </button>
+        <button type="submit" [disabled]="!chargeForm.valid"
+                class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg flex items-center shadow-md transition duration-300 ease-in-out transform hover:scale-105 ml-4">
+          <i class="fas fa-save mr-2"></i> {{ isEditMode ? 'Guardar Cambios' : 'Crear Cargo' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
